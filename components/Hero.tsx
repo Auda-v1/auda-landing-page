@@ -1,16 +1,45 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import LightDualPhone from "@/public/images/auda-bg-bg-bg.png";
 import { TextField, Button } from "@mui/material";
-import { Apple, Google } from "@mui/icons-material";
 import AudaLogoIcon from "./AudaLogo";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import AppStore from "@/public/images/ap-store.png";
+import GooglePlay from "@/public/images/google-play.png";
+import { FIREBASE_STORE } from "@/FirebaseConfig";
+import {
+  addDoc,
+  arrayUnion,
+  collection,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 
 const Hero = () => {
-  const handleSubmit = () => {
-    console.log("Submitted");
+  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+
+  const database = FIREBASE_STORE;
+
+  const handleSubmit = async () => {
+    setIsLoading(true);
+
+    try {
+      const newData = {
+        email,
+        name,
+        createdAt: new Date(),
+      };
+
+      await addDoc(collection(database, "subscribers"), newData);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const mediumScreenSize = useMediaQuery("(min-width:1300px)");
@@ -50,12 +79,14 @@ const Hero = () => {
                 label="What's your email?"
                 variant="outlined"
                 sx={{ background: "#FAFAFA" }}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
                 id="outlined-basic"
                 label="What's your full name?"
                 variant="outlined"
                 sx={{ background: "#FAFAFA", marginTop: 1 }}
+                onChange={(e) => setName(e.target.value)}
               />
 
               <Button
@@ -67,6 +98,9 @@ const Hero = () => {
                   textTransform: "none",
                   height: 50,
                   fontSize: 20,
+                  "&:hover": {
+                    background: "#52baff",
+                  },
                 }}
               >
                 Send
@@ -78,32 +112,22 @@ const Hero = () => {
                 Get the app.
               </h1>
             </div>
-
-            <div className="mt-5 flex flex-row justify-between w-full">
-              <div className="bg-black rounded-lg flex justify-center items-center lg:p-2">
-                <Apple
-                  sx={{
-                    fontSize: "4rem",
-                    color: "white",
-                  }}
+            <div className="mt-5 flex flex-row justify-around w-full">
+              <div>
+                <Image
+                  src={AppStore}
+                  alt="Portrait"
+                  className="w-44 lg:w-[14rem]"
+                  priority={true}
                 />
-                <div className="flex flex-col mr-3">
-                  <p className="text-white">Download on the</p>
-                  <p className="text-white text-3xl">App Store</p>
-                </div>
               </div>
-
-              <div className="bg-black rounded-lg flex justify-center items-center lg:p-2">
-                <Google
-                  sx={{
-                    fontSize: "4rem",
-                    color: "white",
-                  }}
+              <div>
+                <Image
+                  src={GooglePlay}
+                  alt="Portrait"
+                  className="w-44 lg:w-[14rem]"
+                  priority={true}
                 />
-                <div className="flex flex-col mr-3">
-                  <p className="text-white">Get it on</p>
-                  <p className="text-white text-3xl">Google Play</p>
-                </div>
               </div>
             </div>
           </div>

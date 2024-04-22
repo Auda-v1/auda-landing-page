@@ -7,8 +7,6 @@ export default function Footer() {
 
   return (
     <footer className="mb-10 mt-16 px-4 text-gray-500 max-w-7xl">
-      <div className="h-[0.12rem] w-full gradient-background rounded-3xl" />
-
       <div className="flex items-center justify-center text-center">
         {menuItems.map((item, index) => (
           <p className="text-md m-5 hover:underline">{item}</p>
