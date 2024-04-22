@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import ThemeContextProvider from "@/context/ThemeContext";
-import ThemeSwitch from "@/components/ThemeSwitch";
 import "./globals.css";
+import Footer from "@/components/Footer";
+import AudaLogoIcon from "@/components/AudaLogo";
+import Navbar from "@/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,8 +22,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ThemeContextProvider>
+          <Navbar />
           {children}
-          {/* <ThemeSwitch /> */}
+          <AudaLogoIcon />
+          <div className="flex items-center justify-center">
+            <Footer />
+          </div>
         </ThemeContextProvider>
       </body>
     </html>
