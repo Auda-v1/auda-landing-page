@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeContextProvider>
           {children}
-          <ThemeSwitch />
+          {/* <ThemeSwitch /> */}
         </ThemeContextProvider>
       </body>
     </html>
