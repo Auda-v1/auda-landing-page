@@ -10,7 +10,7 @@ import AppStore from "@/public/images/ap-store.png";
 import GooglePlay from "@/public/images/google-play.png";
 import { FIREBASE_STORE } from "@/FirebaseConfig";
 import { addDoc, collection } from "firebase/firestore";
-import { ArrowUpward } from "@mui/icons-material";
+import toast from "react-hot-toast";
 
 const Hero = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +27,6 @@ const Hero = () => {
     }
 
     setIsLoading(true);
-
     try {
       const newData = {
         email,
@@ -36,8 +35,13 @@ const Hero = () => {
       };
 
       await addDoc(collection(database, "subscribers"), newData);
+      toast.success("Thank you for joining!");
+
+      setEmail("");
+      setName("");
+      setErrorMessage("");
     } catch (error) {
-      console.log(error);
+      toast.error("An error occurred. Please try again later.");
     } finally {
       setIsLoading(false);
     }
@@ -80,6 +84,7 @@ const Hero = () => {
                 label="What's your email?"
                 variant="outlined"
                 sx={{ background: "#FAFAFA" }}
+                value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
@@ -87,6 +92,7 @@ const Hero = () => {
                 label="What's your full name?"
                 variant="outlined"
                 sx={{ background: "#FAFAFA", marginTop: 1 }}
+                value={name}
                 onChange={(e) => setName(e.target.value)}
               />
               <div className="mt-2">
