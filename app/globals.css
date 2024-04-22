@@ -31,3 +31,13 @@ html.dark {
 .no-visible-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+.main-gradient-text {
+  background: linear-gradient(90deg, #52f1cf, #358ff8, #fc73ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-background {
+  background: linear-gradient(90deg, #52F1CF, #358FF8, #FC73FF);
+}
