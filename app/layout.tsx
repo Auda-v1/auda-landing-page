@@ -24,7 +24,7 @@ export default function RootLayout({
         <ThemeContextProvider>
           <Navbar />
           {children}
-          <AudaLogoIcon />
+
           <div className="flex items-center justify-center">
             <Footer />
           </div>
